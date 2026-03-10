@@ -149,11 +149,15 @@ Common issues:
 
 **Problem**: Installed via HACS but can't find "OpenVPN Manager" integration.
 
-**Solution**: HACS only copies the files - you need to manually add the integration:
-1. Restart Home Assistant after HACS installation
-2. Go to **Settings → Devices & Services**
-3. Click **+ Add Integration**
-4. Search for "OpenVPN Manager"
+**Quick Fix:**
+1. **Restart Home Assistant** (Settings → System → Restart) - REQUIRED!
+2. Wait 2 minutes for full restart
+3. Clear browser cache (Ctrl+Shift+R)
+4. Go to **Settings → Devices & Services**
+5. Click **+ Add Integration**
+6. Search for "OpenVPN Manager"
+
+**Still not showing?** See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed steps.
 
 ### Can't Find Integration in HACS
 
