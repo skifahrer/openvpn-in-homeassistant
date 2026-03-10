@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.1] - 2026-03-11
+## [0.0.4] - 2026-03-11
 
 ### Changed
 - Simplified config flow for better user experience
@@ -21,7 +21,7 @@ All notable changes to this project will be documented in this file.
 - Simplified upload instructions
 - Comprehensive troubleshooting guide
 
-## [1.0.0] - 2026-03-10
+## [0.0.3] - 2026-03-10
 
 ### Added
 - Initial release
