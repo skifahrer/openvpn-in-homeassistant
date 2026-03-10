@@ -2,27 +2,25 @@
   "config": {
     "step": {
       "user": {
-        "title": "OpenVPN Manager Setup",
-        "description": "Before continuing: Install and start the OpenVPN Manager add-on. Make sure it's running. After this setup, you'll need to upload your .ovpn file.",
-        "data": {
-          "api_host": "API Host",
-          "api_port": "API Port"
-        },
-        "data_description": {
-          "api_host": "Usually localhost or 127.0.0.1",
-          "api_port": "Default is 9876"
-        }
+        "title": "OpenVPN Setup",
+        "description": "Setting up OpenVPN connection..."
+      },
+      "install_addon": {
+        "title": "Install OpenVPN Add-on",
+        "description": "The OpenVPN add-on needs to be installed first. Quick Setup: 1) Go to Settings → Add-ons → Add-on Store 2) Click menu → Repositories 3) Add repository URL 4) Install and Start OpenVPN Manager 5) Click Submit below. Already installed? Make sure it's Started, then click Submit."
       },
       "upload": {
-        "title": "Upload VPN Configuration",
-        "description": "Upload your .ovpn file via: 1) Add-on Files tab or 2) Terminal using curl command. See documentation for detailed instructions. After uploading, toggle the VPN switch in your dashboard."
+        "title": "Upload Your VPN File",
+        "description": "Almost done! Upload your .ovpn file via Add-on Files tab (Settings → Add-ons → OpenVPN Manager → Files → /data/configs/). After uploading, a VPN switch will appear on your dashboard!"
       }
     },
     "error": {
-      "cannot_connect": "Cannot connect to OpenVPN Manager add-on. Verify: add-on is running, host and port are correct, check add-on logs for errors."
+      "cannot_connect": "Cannot connect to OpenVPN add-on. Make sure it's installed and started.",
+      "invalid_url": "Invalid URL provided"
     },
     "abort": {
-      "already_configured": "OpenVPN Manager is already configured"
+      "already_configured": "OpenVPN Manager is already configured",
+      "addon_not_running": "Add-on is not running. Please start it then try again."
     }
   }
 }

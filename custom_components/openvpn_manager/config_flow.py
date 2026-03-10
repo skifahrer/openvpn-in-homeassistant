@@ -30,56 +30,71 @@ class OpenVPNManagerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Initialize config flow."""
         self._api_host = DEFAULT_API_HOST
         self._api_port = DEFAULT_API_PORT
+        self._addon_detected = False
 
     async def async_step_user(
         self, user_input: Dict[str, Any] | None = None
     ) -> FlowResult:
-        """Handle the initial step."""
+        """Handle the initial step - auto-detect add-on."""
         errors = {}
 
-        if user_input is not None:
-            # Get user input
-            api_host = user_input[CONF_API_HOST]
-            api_port = user_input[CONF_API_PORT]
-
-            # Validate connection
+        # First, try to detect the add-on automatically
+        if user_input is None:
+            # Try to connect to default add-on location
             try:
-                client = APIClient(api_host, api_port)
+                client = APIClient(DEFAULT_API_HOST, DEFAULT_API_PORT)
                 health = await client.health_check()
 
-                if not health.get("success"):
-                    errors["base"] = "cannot_connect"
-                else:
-                    # Connection successful - store data and show upload instructions
-                    await self.async_set_unique_id(f"{DOMAIN}_{api_host}_{api_port}")
+                if health.get("success"):
+                    # Add-on is running! Skip to upload step
+                    self._addon_detected = True
+                    self._api_host = DEFAULT_API_HOST
+                    self._api_port = DEFAULT_API_PORT
+
+                    await self.async_set_unique_id(f"{DOMAIN}_{DEFAULT_API_HOST}_{DEFAULT_API_PORT}")
                     self._abort_if_unique_id_configured()
 
-                    # Store connection info
-                    self._api_host = api_host
-                    self._api_port = api_port
-
-                    # Show upload instructions step
+                    # Go directly to upload step
                     return await self.async_step_upload()
+                else:
+                    # Add-on exists but not healthy
+                    return await self.async_step_install_addon()
 
-            except Exception as e:
-                _LOGGER.error(f"Error connecting to OpenVPN Manager add-on: {e}")
-                errors["base"] = "cannot_connect"
+            except Exception:
+                # Add-on not running, show install instructions
+                return await self.async_step_install_addon()
 
-        # Show form
-        data_schema = vol.Schema(
-            {
-                vol.Required(CONF_API_HOST, default=DEFAULT_API_HOST): cv.string,
-                vol.Required(CONF_API_PORT, default=DEFAULT_API_PORT): cv.port,
-            }
-        )
+        # This shouldn't be reached, but handle user input if provided
+        return await self.async_step_install_addon(user_input)
 
+    async def async_step_install_addon(
+        self, user_input: Dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Show add-on installation instructions."""
+        if user_input is not None:
+            # User clicked "I've installed the add-on", verify it's running
+            try:
+                client = APIClient(DEFAULT_API_HOST, DEFAULT_API_PORT)
+                health = await client.health_check()
+
+                if health.get("success"):
+                    await self.async_set_unique_id(f"{DOMAIN}_{DEFAULT_API_HOST}_{DEFAULT_API_PORT}")
+                    self._abort_if_unique_id_configured()
+
+                    self._api_host = DEFAULT_API_HOST
+                    self._api_port = DEFAULT_API_PORT
+                    return await self.async_step_upload()
+                else:
+                    return self.async_abort(reason="addon_not_running")
+            except Exception:
+                return self.async_abort(reason="addon_not_running")
+
+        # Show installation instructions
         return self.async_show_form(
-            step_id="user",
-            data_schema=data_schema,
-            errors=errors,
+            step_id="install_addon",
+            data_schema=vol.Schema({}),
             description_placeholders={
-                "default_host": DEFAULT_API_HOST,
-                "default_port": str(DEFAULT_API_PORT),
+                "addon_url": "config/hassio/addon/local_openvpn-manager",
             },
         )
 
