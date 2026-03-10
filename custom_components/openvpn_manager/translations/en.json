@@ -7,7 +7,7 @@
       },
       "install_addon": {
         "title": "Install OpenVPN Add-on",
-        "description": "The OpenVPN add-on needs to be installed first. Quick Setup: 1) Go to Settings → Add-ons → Add-on Store 2) Click menu → Repositories 3) Add repository URL 4) Install and Start OpenVPN Manager 5) Click Submit below. Already installed? Make sure it's Started, then click Submit."
+        "description": "The OpenVPN add-on needs to be installed first. Quick Setup: 1) Settings → Add-ons → Add-on Store 2) Menu → Repositories 3) Add repository from documentation 4) Install and Start OpenVPN Manager 5) Click Submit. Already installed? Make sure it's Started, then click Submit."
       },
       "upload": {
         "title": "Upload Your VPN File",

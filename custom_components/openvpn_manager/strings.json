@@ -7,7 +7,7 @@
       },
       "install_addon": {
         "title": "Install OpenVPN Add-on",
-        "description": "The OpenVPN add-on needs to be installed first.\n\n**Quick Setup:**\n1. Go to Settings → Add-ons → Add-on Store\n2. Click menu (⋮) → Repositories\n3. Add: https://github.com/skifahrer/openvpn-in-homeassistant\n4. Install and Start the OpenVPN Manager add-on\n5. Come back here and click Submit\n\n**Already installed?** Make sure the add-on is Started, then click Submit below."
+        "description": "The OpenVPN add-on needs to be installed first. Quick Setup: 1) Go to Settings → Add-ons → Add-on Store 2) Click menu → Repositories 3) Add the repository from this integration's documentation 4) Install and Start OpenVPN Manager add-on 5) Click Submit below. Already installed? Make sure the add-on is Started, then click Submit."
       },
       "upload": {
         "title": "Upload Your VPN File",
