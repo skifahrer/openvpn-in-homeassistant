@@ -1,0 +1,24 @@
+{
+  "name": "OpenVPN Manager",
+  "version": "1.0.0",
+  "slug": "openvpn-manager",
+  "description": "OpenVPN client for Home Assistant - connect to any OpenVPN server",
+  "url": "https://github.com/skifahrer/openvpn-in-homeassistant",
+  "arch": ["amd64", "armhf", "armv7", "aarch64"],
+  "startup": "services",
+  "boot": "auto",
+  "host_network": true,
+  "privileged": ["NET_ADMIN", "NET_RAW"],
+  "map": ["config:rw", "ssl"],
+  "options": {
+    "auto_start": false,
+    "api_port": 9876,
+    "log_level": "info"
+  },
+  "schema": {
+    "auto_start": "bool",
+    "api_port": "port",
+    "log_level": "list(debug|info|warning|error)"
+  },
+  "image": "ghcr.io/skifahrer/openvpn-manager-{arch}"
+}

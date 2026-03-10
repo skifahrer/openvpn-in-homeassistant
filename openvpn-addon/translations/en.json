@@ -1,0 +1,16 @@
+{
+  "configuration": {
+    "auto_start": {
+      "name": "Auto Start VPN",
+      "description": "Automatically connect to VPN when add-on starts"
+    },
+    "api_port": {
+      "name": "API Port",
+      "description": "Port for the HTTP API server"
+    },
+    "log_level": {
+      "name": "Log Level",
+      "description": "Logging verbosity (debug, info, warning, error)"
+    }
+  }
+}

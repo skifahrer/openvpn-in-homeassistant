@@ -1,0 +1,7 @@
+{
+  "name": "OpenVPN Manager",
+  "render_readme": true,
+  "domains": ["openvpn_manager"],
+  "homeassistant": "2024.1.0",
+  "iot_class": "Local Push"
+}

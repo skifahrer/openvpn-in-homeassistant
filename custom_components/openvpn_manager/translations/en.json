@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "OpenVPN Manager Setup",
+        "description": "Configure connection to the OpenVPN Manager add-on. Make sure the add-on is installed and running before proceeding.",
+        "data": {
+          "api_host": "API Host",
+          "api_port": "API Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to OpenVPN Manager add-on. Please verify the add-on is running and the host/port are correct."
+    },
+    "abort": {
+      "already_configured": "OpenVPN Manager is already configured"
+    }
+  }
+}
