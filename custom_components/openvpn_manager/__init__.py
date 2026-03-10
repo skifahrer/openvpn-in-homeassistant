@@ -7,6 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+import homeassistant.helpers.config_validation as cv
 
 from .const import (
     DOMAIN,
@@ -20,6 +21,9 @@ from .const import (
 from .helpers.api_client import APIClient
 
 _LOGGER = logging.getLogger(__name__)
+
+# Config schema - integration is only set up via config entries
+CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 
 
 async def async_setup(hass: HomeAssistant, config: Dict[str, Any]) -> bool:

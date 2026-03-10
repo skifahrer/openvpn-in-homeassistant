@@ -3,23 +3,23 @@
     "step": {
       "user": {
         "title": "OpenVPN Manager Setup",
-        "description": "**Before continuing:**\n1. Install and start the OpenVPN Manager add-on\n2. Make sure it's running (Settings → Add-ons → OpenVPN Manager)\n\n**After this setup:**\nYou'll need to upload your .ovpn file. Instructions will be shown after clicking Submit.",
+        "description": "Before continuing: Install and start the OpenVPN Manager add-on. Make sure it's running. After this setup, you'll need to upload your .ovpn file.",
         "data": {
           "api_host": "API Host",
           "api_port": "API Port"
         },
         "data_description": {
-          "api_host": "Usually 'localhost' or '127.0.0.1'",
+          "api_host": "Usually localhost or 127.0.0.1",
           "api_port": "Default is 9876"
         }
       },
       "upload": {
         "title": "Upload VPN Configuration",
-        "description": "**Next step: Upload your .ovpn file**\n\nYou can upload via:\n\n**Option 1 - Add-on File Browser:**\n1. Settings → Add-ons → OpenVPN Manager → Files\n2. Navigate to /data/configs/\n3. Upload your .ovpn file\n\n**Option 2 - Terminal/SSH:**\n```\ncurl -X POST -F \"file=@your-config.ovpn\" http://homeassistant.local:9876/api/upload\n```\n\nAfter uploading, toggle the VPN switch in your dashboard!"
+        "description": "Upload your .ovpn file via: 1) Add-on Files tab or 2) Terminal using curl command. See documentation for detailed instructions. After uploading, toggle the VPN switch in your dashboard."
       }
     },
     "error": {
-      "cannot_connect": "Cannot connect to OpenVPN Manager add-on.\n\nPlease verify:\n- Add-on is installed and running\n- API host/port are correct\n- Check add-on logs for errors"
+      "cannot_connect": "Cannot connect to OpenVPN Manager add-on. Verify: add-on is running, host and port are correct, check add-on logs for errors."
     },
     "abort": {
       "already_configured": "OpenVPN Manager is already configured"

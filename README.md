@@ -12,6 +12,8 @@ Connect your Home Assistant to any OpenVPN server for secure remote access.
 ## Installation
 
 > **Important**: This integration is not yet in the default HACS repository.
+>
+> **For maintainers**: See [GITHUB-SETUP.md](GITHUB-SETUP.md) for required GitHub repository configuration before HACS submission.
 
 ### Step 1: Install the Add-on
 
@@ -48,12 +50,11 @@ Connect your Home Assistant to any OpenVPN server for secure remote access.
 5. Configure:
    - Host: `localhost`
    - Port: `9876`
-6. Click **Submit**
-7. Follow the on-screen instructions to upload your .ovpn file
+6. Click **Submit** twice (follow the upload instructions shown)
 
 ### Step 4: Upload Your VPN Config
 
-The integration will show you how to upload your .ovpn file. You have two options:
+After adding the integration, upload your .ovpn file using one of these methods:
 
 **Option A - Via Add-on Files (Easiest):**
 1. Go to **Settings → Add-ons → OpenVPN Manager**
