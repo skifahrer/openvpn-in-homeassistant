@@ -10,6 +10,8 @@ jobs:
   validate-hacs:
     runs-on: ubuntu-latest
     name: Validate HACS
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +24,8 @@ jobs:
   validate-hassfest:
     runs-on: ubuntu-latest
     name: Validate with hassfest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
