@@ -1,12 +1,12 @@
 {
   "domain": "openvpn_manager",
   "name": "OpenVPN Manager",
-  "version": "1.0.0",
-  "documentation": "https://github.com/skifahrer/openvpn-in-homeassistant",
-  "issue_tracker": "https://github.com/skifahrer/openvpn-in-homeassistant/issues",
   "codeowners": ["@skifahrer"],
   "config_flow": true,
-  "requirements": [],
+  "documentation": "https://github.com/skifahrer/openvpn-in-homeassistant",
+  "integration_type": "service",
   "iot_class": "local_push",
-  "integration_type": "service"
+  "issue_tracker": "https://github.com/skifahrer/openvpn-in-homeassistant/issues",
+  "requirements": [],
+  "version": "1.0.0"
 }
