@@ -6,12 +6,12 @@
         "description": "Setting up OpenVPN connection..."
       },
       "install_addon": {
-        "title": "Install OpenVPN Add-on",
-        "description": "The OpenVPN add-on needs to be installed first. Quick Setup: 1) Go to Settings → Add-ons → Add-on Store 2) Click menu → Repositories 3) Add the repository from this integration's documentation 4) Install and Start OpenVPN Manager add-on 5) Click Submit below. Already installed? Make sure the add-on is Started, then click Submit."
+        "title": "Install Add-on First",
+        "description": "Install the OpenVPN Manager add-on from Settings → Add-ons before continuing. See documentation for repository URL. Click Submit after the add-on is running."
       },
       "upload": {
-        "title": "Upload Your VPN File",
-        "description": "**Almost done!** Now upload your .ovpn file:\n\n**Method 1 - Via Add-on (Easiest):**\n1. Settings → Add-ons → OpenVPN Manager\n2. Click 'Files' tab\n3. Open /data/configs/ folder\n4. Click upload icon, select your .ovpn file\n\n**Method 2 - Via URL:**\nIf your .ovpn file is at a URL, paste it below.\n\n**After uploading:** A VPN switch will appear on your dashboard!"
+        "title": "Upload VPN File",
+        "description": "Upload your .ovpn file via: Settings → Add-ons → OpenVPN Manager → Files tab → data/configs folder. After uploading, a VPN switch will appear on your dashboard. Click Submit to finish setup."
       }
     },
     "error": {
