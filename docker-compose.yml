@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  openvpn-manager:
+    build: ./openvpn-addon
+    container_name: openvpn-manager
+    hostname: openvpn-manager
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    devices:
+      - /dev/net/tun
+    volumes:
+      - ./data/configs:/data/configs
+      - ./data/logs:/data/logs
+      - ./data:/data
+    environment:
+      - API_PORT=9876
+      - LOG_LEVEL=info
+      - AUTO_START=false
+    ports:
+      - "9876:9876"

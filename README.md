@@ -12,10 +12,12 @@ Connect your Home Assistant to any OpenVPN server for secure remote access.
 ## Installation
 
 > **Important**: This integration is not yet in the default HACS repository.
->
-> **For maintainers**: See [GITHUB-SETUP.md](GITHUB-SETUP.md) for required GitHub repository configuration before HACS submission.
 
-### Step 1: Install the Add-on
+> **Home Assistant Container users**: Add-ons don't work with Container installation. See [CONTAINER-INSTALL.md](CONTAINER-INSTALL.md) for Docker Compose setup instead.
+
+### For Home Assistant OS/Supervised:
+
+#### Step 1: Install the Add-on
 
 1. Go to **Settings → Add-ons → Add-on Store**
 2. Click menu (⋮) → **Repositories**
