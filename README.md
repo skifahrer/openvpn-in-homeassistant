@@ -41,23 +41,38 @@ Connect your Home Assistant to any OpenVPN server for secure remote access.
 
 ### Step 3: Add Integration
 
-1. Go to **Settings → Devices & Services → Add Integration**
-2. Search "OpenVPN Manager"
-3. Configure:
+1. Go to **Settings → Devices & Services**
+2. Click **+ Add Integration** (bottom right)
+3. Search for "OpenVPN Manager"
+4. Click on it
+5. Configure:
    - Host: `localhost`
    - Port: `9876`
+6. Click **Submit**
+7. Follow the on-screen instructions to upload your .ovpn file
 
 ### Step 4: Upload Your VPN Config
 
-Upload your `.ovpn` file:
+The integration will show you how to upload your .ovpn file. You have two options:
 
+**Option A - Via Add-on Files (Easiest):**
+1. Go to **Settings → Add-ons → OpenVPN Manager**
+2. Click the **Files** tab
+3. Navigate to `/data/configs/`
+4. Click the folder icon to upload
+5. Select your `.ovpn` file
+
+**Option B - Via Terminal/SSH:**
 ```bash
 curl -X POST -F "file=@your-config.ovpn" http://homeassistant.local:9876/api/upload
 ```
 
 ### Step 5: Connect
 
-Toggle `switch.openvpn_connection` to ON in your dashboard.
+1. Go to your dashboard
+2. Toggle `switch.openvpn_connection` to ON
+3. Wait 5-10 seconds
+4. Check `sensor.openvpn_status` - should show "connected"
 
 ## Dashboard Entities
 
@@ -129,7 +144,17 @@ Common issues:
 - Authentication failed (check credentials)
 - Port blocked by firewall
 
-### Can't Find Integration
+### Integration Not Showing After HACS Install
+
+**Problem**: Installed via HACS but can't find "OpenVPN Manager" integration.
+
+**Solution**: HACS only copies the files - you need to manually add the integration:
+1. Restart Home Assistant after HACS installation
+2. Go to **Settings → Devices & Services**
+3. Click **+ Add Integration**
+4. Search for "OpenVPN Manager"
+
+### Can't Find Integration in HACS
 
 Make sure you:
 1. Added the repository as a **custom repository** in HACS

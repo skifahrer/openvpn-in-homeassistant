@@ -50,17 +50,16 @@ class OpenVPNManagerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 if not health.get("success"):
                     errors["base"] = "cannot_connect"
                 else:
-                    # Connection successful - create entry
+                    # Connection successful - store data and show upload instructions
                     await self.async_set_unique_id(f"{DOMAIN}_{api_host}_{api_port}")
                     self._abort_if_unique_id_configured()
 
-                    return self.async_create_entry(
-                        title="OpenVPN Manager",
-                        data={
-                            CONF_API_HOST: api_host,
-                            CONF_API_PORT: api_port,
-                        },
-                    )
+                    # Store connection info
+                    self._api_host = api_host
+                    self._api_port = api_port
+
+                    # Show upload instructions step
+                    return await self.async_step_upload()
 
             except Exception as e:
                 _LOGGER.error(f"Error connecting to OpenVPN Manager add-on: {e}")
@@ -82,6 +81,25 @@ class OpenVPNManagerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 "default_host": DEFAULT_API_HOST,
                 "default_port": str(DEFAULT_API_PORT),
             },
+        )
+
+    async def async_step_upload(self, user_input: Dict[str, Any] | None = None) -> FlowResult:
+        """Show upload instructions."""
+        if user_input is not None:
+            # User clicked "I've uploaded the file" or similar
+            return self.async_create_entry(
+                title="OpenVPN Manager",
+                data={
+                    CONF_API_HOST: self._api_host,
+                    CONF_API_PORT: self._api_port,
+                },
+            )
+
+        # Show instructions for uploading .ovpn file
+        return self.async_show_form(
+            step_id="upload",
+            data_schema=vol.Schema({}),
+            last_step=True,
         )
 
     async def async_step_import(self, import_config: Dict[str, Any]) -> FlowResult:
