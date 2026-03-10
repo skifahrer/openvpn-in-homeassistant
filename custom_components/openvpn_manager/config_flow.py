@@ -70,9 +70,9 @@ class OpenVPNManagerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_install_addon(
         self, user_input: Dict[str, Any] | None = None
     ) -> FlowResult:
-        """Show add-on installation instructions."""
+        """Show installation instructions based on HA installation type."""
         if user_input is not None:
-            # User clicked "I've installed the add-on", verify it's running
+            # User clicked "I've installed", verify it's running
             try:
                 client = APIClient(DEFAULT_API_HOST, DEFAULT_API_PORT)
                 health = await client.health_check()
@@ -89,9 +89,14 @@ class OpenVPNManagerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             except Exception:
                 return self.async_abort(reason="addon_not_running")
 
-        # Show installation instructions
+        # Detect installation type
+        has_supervisor = self.hass.components.hassio.is_hassio() if "hassio" in self.hass.config.components else False
+
+        # Show appropriate instructions based on installation type
+        step_id = "install_addon" if has_supervisor else "install_container"
+
         return self.async_show_form(
-            step_id="install_addon",
+            step_id=step_id,
             data_schema=vol.Schema({}),
             description_placeholders={
                 "addon_url": "config/hassio/addon/local_openvpn-manager",

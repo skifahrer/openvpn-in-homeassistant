@@ -9,6 +9,10 @@
         "title": "Install Add-on First",
         "description": "Install the OpenVPN Manager add-on from Settings → Add-ons before continuing. See documentation for repository URL. Click Submit after the add-on is running."
       },
+      "install_container": {
+        "title": "Install Docker Container",
+        "description": "For Home Assistant Container, run OpenVPN Manager as a separate Docker container. See CONTAINER-INSTALL.md in documentation for setup instructions. Use docker-compose or docker run command. Click Submit after the container is running."
+      },
       "upload": {
         "title": "Upload VPN File",
         "description": "Upload your .ovpn file via: Settings → Add-ons → OpenVPN Manager → Files tab → data/configs folder. After uploading, a VPN switch will appear on your dashboard. Click Submit to finish setup."
