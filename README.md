@@ -15,7 +15,7 @@ Connect your Home Assistant to any OpenVPN server for secure remote access.
 
 > **New in v0.1.0**: Fully automatic! The integration now auto-detects your installation type and handles everything automatically. No manual Docker setup needed!
 
-> **For Container installations**: Mount the Docker socket by adding `-v /var/run/docker.sock:/var/run/docker.sock` to your Home Assistant container startup command. This allows the integration to automatically manage the OpenVPN container.
+> **For Container installations**: Mount the Docker socket with write access by adding `-v /var/run/docker.sock:/var/run/docker.sock` (no `:ro`) to your Home Assistant container startup command. This allows the integration to automatically create and manage the OpenVPN container.
 
 ### Quick Setup (All Installation Types):
 

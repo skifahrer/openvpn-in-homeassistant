@@ -25,7 +25,7 @@
     "abort": {
       "already_configured": "OpenVPN Manager is already configured",
       "addon_not_running": "Add-on is not running. Please start it then try again.",
-      "docker_not_available": "Docker is not available. For Container installations, mount the Docker socket: add -v /var/run/docker.sock:/var/run/docker.sock to your Home Assistant container startup command, then restart.",
+      "docker_not_available": "Docker is not available. For Container installations, mount the Docker socket with write access: add -v /var/run/docker.sock:/var/run/docker.sock (no :ro) to your Home Assistant container, then restart.",
       "container_start_failed": "Failed to start OpenVPN container. Check Docker logs for details.",
       "api_not_accessible": "Container started but API not responding. Check container logs.",
       "unknown_error": "An unexpected error occurred. Please check the logs."
