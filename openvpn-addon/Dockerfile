@@ -7,15 +7,11 @@ RUN apk add --no-cache \
     iproute2 \
     ca-certificates \
     python3 \
-    py3-pip \
     py3-flask \
+    py3-requests \
+    py3-werkzeug \
     bash \
     jq
-
-# Install Python dependencies
-RUN pip3 install --no-cache-dir \
-    requests \
-    werkzeug
 
 # Create directories
 RUN mkdir -p /opt/openvpn_manager /data/configs /data/logs
