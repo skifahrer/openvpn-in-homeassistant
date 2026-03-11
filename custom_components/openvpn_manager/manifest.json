@@ -8,5 +8,5 @@
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/skifahrer/openvpn-in-homeassistant/issues",
   "requirements": ["docker==7.0.0"],
-  "version": "0.1.0"
+  "version": "0.1.1"
 }
