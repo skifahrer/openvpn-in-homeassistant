@@ -1,5 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
-FROM ${BUILD_FROM}
+FROM alpine:3.19
 
 # Install OpenVPN and dependencies
 RUN apk add --no-cache \
