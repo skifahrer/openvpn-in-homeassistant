@@ -17,6 +17,7 @@ from .const import (
     CONF_API_PORT,
 )
 from .helpers.api_client import APIClient
+from .docker_manager import DockerManager
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,22 +32,23 @@ class OpenVPNManagerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self._api_host = DEFAULT_API_HOST
         self._api_port = DEFAULT_API_PORT
         self._addon_detected = False
+        self._docker_manager = None
 
     async def async_step_user(
         self, user_input: Dict[str, Any] | None = None
     ) -> FlowResult:
-        """Handle the initial step - auto-detect add-on."""
+        """Handle the initial step - auto-detect or auto-start OpenVPN."""
         errors = {}
 
-        # First, try to detect the add-on automatically
+        # First, try to detect if service is already running
         if user_input is None:
-            # Try to connect to default add-on location
+            # Try to connect to default location
             try:
                 client = APIClient(DEFAULT_API_HOST, DEFAULT_API_PORT)
                 health = await client.health_check()
 
                 if health.get("success"):
-                    # Add-on is running! Skip to upload step
+                    # Service is running! Skip to upload step
                     self._addon_detected = True
                     self._api_host = DEFAULT_API_HOST
                     self._api_port = DEFAULT_API_PORT
@@ -56,16 +58,81 @@ class OpenVPNManagerConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                     # Go directly to upload step
                     return await self.async_step_upload()
-                else:
-                    # Add-on exists but not healthy
-                    return await self.async_step_install_addon()
 
             except Exception:
-                # Add-on not running, show install instructions
-                return await self.async_step_install_addon()
+                pass  # Service not running, continue to auto-start
 
-        # This shouldn't be reached, but handle user input if provided
-        return await self.async_step_install_addon(user_input)
+            # Service not running - try to auto-start it
+            return await self.async_step_auto_start()
+
+        # This shouldn't be reached
+        return await self.async_step_auto_start(user_input)
+
+    async def async_step_auto_start(
+        self, user_input: Dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Automatically start OpenVPN service (add-on or container)."""
+
+        # Check if we have Supervisor (OS/Supervised install)
+        has_supervisor = "hassio" in self.hass.config.components
+
+        if has_supervisor:
+            # Running on OS/Supervised - show add-on install instructions
+            return await self.async_step_install_addon(user_input)
+
+        # Running on Container/Core - try Docker auto-start
+        self._docker_manager = DockerManager(self.hass)
+
+        if not self._docker_manager.is_available():
+            # Docker not available
+            return self.async_abort(
+                reason="docker_not_available",
+                description_placeholders={
+                    "error": "Docker is not available. Please ensure Docker is installed and accessible."
+                }
+            )
+
+        # Try to auto-start container
+        _LOGGER.info("Attempting to auto-start OpenVPN container")
+        result = await self._docker_manager.ensure_container_running()
+
+        if not result.get("success"):
+            return self.async_abort(
+                reason="container_start_failed",
+                description_placeholders={
+                    "error": result.get("error", "Unknown error")
+                }
+            )
+
+        # Container started! Wait a moment for it to initialize
+        import asyncio
+        await asyncio.sleep(3)
+
+        # Verify it's accessible
+        try:
+            client = APIClient(DEFAULT_API_HOST, DEFAULT_API_PORT)
+            health = await client.health_check()
+
+            if health.get("success"):
+                await self.async_set_unique_id(f"{DOMAIN}_{DEFAULT_API_HOST}_{DEFAULT_API_PORT}")
+                self._abort_if_unique_id_configured()
+
+                self._api_host = DEFAULT_API_HOST
+                self._api_port = DEFAULT_API_PORT
+
+                # Success! Go to upload step
+                return await self.async_step_upload()
+
+        except Exception as e:
+            _LOGGER.error(f"Container started but API not accessible: {e}")
+            return self.async_abort(
+                reason="api_not_accessible",
+                description_placeholders={
+                    "error": "Container started but API not responding. Check container logs."
+                }
+            )
+
+        return self.async_abort(reason="unknown_error")
 
     async def async_step_install_addon(
         self, user_input: Dict[str, Any] | None = None
